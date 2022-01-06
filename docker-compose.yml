@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  proxy:
+    restart: unless-stopped
+    image: eitch-proxy
+    build: ./build
+    container_name: eitch-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./letsencrypt:/etc/letsencrypt"
+      - "./ssl/dhparam.pem:/etc/ssl/dhparam.pem:ro"
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+      - "./nginx/modules-enabled:/etc/nginx/modules-enabled"
+      - "./nginx/sites-enabled:/etc/nginx/sites-enabled"
+      - "./nginx/cache:/var/cache/nginx"
+      - "./nginx/pid:/var/run"
+    environment:
+      - TZ=Europe/Zurich
+      - LETS_ENCRYPT_EMAIL=eitch@eitchnet.ch
+      - NGINX_HOST=proxy.eitchnet.ch
+      - NGINX_PORT=80
+    networks:
+      proxy-network:
+        ipv4_address: 10.254.0.2
+networks:
+  proxy-network:
+    external: true
