@@ -1,5 +1,9 @@
 # nginx-lets-encrypt-proxy
 
+This proxy is incomplete. It currently parses the configuration and reloads nginx, but let's encrypt obtaining is not yet implemented. DON'T USE, or send a PR =)
+
+Currently i have moved to https://github.com/NginxProxyManager
+
 This is a docker container as a nginx proxy with Let's Encrypt and virtual hosts support.
 
 Inspirations:
